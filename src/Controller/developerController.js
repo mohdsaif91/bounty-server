@@ -6,14 +6,22 @@ exports.addDeveloper = (req, res) => {
       .create(req.body)
       .then((data) => {
         res.send(200).send(data);
-        // res.end();
       })
       .catch((err) => {
         console.log(err);
         throw err;
       });
-    // console.log(req.body);
-    // res.send("Api is working");
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+exports.getDeveloper = (req, res) => {
+  try {
+    developer.findAll().then((data) => {
+      console.log(data);
+      res.status(200).send(data);
+    });
   } catch (error) {
     res.send(error);
   }

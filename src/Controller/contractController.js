@@ -2,7 +2,7 @@ exports.uploadContract = (req, res) => {
   try {
     if (req.file) {
       let uploadFile = req.file;
-      const name = uploadFile.name;
+      const name = uploadFile.fieldname;
       const splitedCode = req.file.buffer.toString().split("\n");
       const functionNameArray = splitedCode.filter((m) => {
         // console.log(m);
@@ -10,7 +10,8 @@ exports.uploadContract = (req, res) => {
           return m;
         }
       });
-      res.status(200).send(functionNameArray);
+      const generatedReponse = [{ contractName: name, functionNameArray }];
+      res.status(200).send(generatedReponse);
     } else {
       res.status(400).send("Image field is required");
     }

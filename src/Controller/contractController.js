@@ -4,13 +4,15 @@ exports.uploadContract = (req, res) => {
       let uploadFile = req.file;
       const name = uploadFile.fieldname;
       const splitedCode = req.file.buffer.toString().split("\n");
-      const functionNameArray = splitedCode.filter((m) => {
-        // console.log(m);
+      const newfunctionNameArray = [];
+      splitedCode.filter((m) => {
         if (m.includes("function")) {
-          return m;
+          newfunctionNameArray.push({ functionName: m, bountyValue: "" });
         }
       });
-      const generatedReponse = [{ contractName: name, functionNameArray }];
+      const generatedReponse = [
+        { contractName: name, functionNameArray: newfunctionNameArray },
+      ];
       res.status(200).send(generatedReponse);
     } else {
       res.status(400).send("Image field is required");

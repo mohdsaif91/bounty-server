@@ -1,13 +1,17 @@
 exports.uploadContract = (req, res) => {
   try {
-    if (req.file) {
-      let uploadFile = req.file;
+    console.log(req.files.length);
+    Object.keys(req.files).forEach((key) => {
+      console.log(req.files[key]);
+    });
+    if (req.files.length > 0) {
+      let uploadFile = req.files[0];
       const name = uploadFile.fieldname;
-      const splitedCode = req.file.buffer.toString().split("\n");
+      const splitedCode = req.files[0].buffer.toString().split("\n");
       const newfunctionNameArray = [];
       splitedCode.filter((m) => {
         if (m.includes("function")) {
-          newfunctionNameArray.push({ functionName: m, bountyValue: "" });
+          newfunctionNameArray.push({ functionName: m, bountyValue: 0 });
         }
       });
       const generatedReponse = [

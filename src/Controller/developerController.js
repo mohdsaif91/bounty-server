@@ -5,14 +5,14 @@ exports.addDeveloper = (req, res) => {
     developer
       .create(req.body)
       .then((data) => {
-        res.send(200).send(data);
+        res.status(200).send(data.dataValues);
       })
       .catch((err) => {
         console.log(err);
         throw err;
       });
   } catch (error) {
-    res.send(error);
+    res.status(500).send(error);
   }
 };
 
